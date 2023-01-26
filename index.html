@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width"> 
+        <title>Encriptador</title>
+        <!-- <link rel="stylesheet" href="reset.css"> -->
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <div class="container">
+
+            <!-- Logo -->
+            <div class="logo">
+                <img src="imagenes/logo.png" alt="logo">     
+            </div>
+
+            <!-- Sección de principal -->
+            <div class="principal">
+
+                <!-- Sección Ingreso de texto -->
+                <div class="container-texto">
+                    <h2 class="ingrese-texto"></h2>
+                    <label for="ingrese-texto"></label>
+                    <textarea class="texto1" type="text" id="texto-ingresado" placeholder="Ingrese el texto aquí" autofocus></textarea>
+                </div>
+
+                <!-- Sección mensaje de advertencia -->
+                <div class="container-advertencia">
+                    <img class="advertencia" src="imagenes/advertencia.png" alt="advertencia">
+                </div>
+    
+                <!-- Sección botones -->
+                <div class="container-botones">
+                    <button class="encriptar" onclick="onClickEncriptar()"><p>Encriptar</p></button>
+                    <button class="desencriptar" onclick="onClickDesencriptar()" ><p>Desencriptar</p></button>
+                    <button class="copiar" id="copiar" style="display:none" onclick="CopiarTexto()"><p>Copiar</p></button>
+                </div>
+            </div>
+
+            <!-- Sección barra lateral -->            
+            <div class="barra-lateral">
+                <div class="barra" id="barra">
+                    <textarea class="texto2" type="text" id="resultado"></textarea>
+                    <div class="no-mensaje-container">
+                        <img id="munieco" src="imagenes/munieco.svg">
+                        <img id="ningun-mensaje" src="imagenes/Ningún-mensaje.png">
+                        <img id="texto-deseado" src="imagenes/Ingresa-texto.png">
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <p class="creador">Creado por Bruno Mainardi</p>
+            </footer>
+        </div>
+        
+       
+       <script>
+            function trasladarTexto(texto) {
+                document.getElementById("resultado").value =  texto;
+            }
+        
+            function CopiarTexto() {
+                let texto = document.getElementById("resultado");
+                texto.select();
+                texto.setSelectionRange(0, 9999);
+                document.execCommand("copy");
+            }
+
+            function encriptar() {
+                let str = document.getElementById("texto-ingresado").value;
+                let lista = str.split('');
+                
+                var texto = "";
+                var cantidad = lista.length;
+                var contador = 1;
+                
+                for(var posicion = 0; posicion < lista.length; posicion++){
+                    if(lista[posicion] == "a"){
+                    texto = texto + "ai"
+                    }else if(lista[posicion] == "e"){
+                    texto = texto + "enter"
+                    }else if(lista[posicion] == "i"){
+                    texto = texto + "imes"
+                    }else if(lista[posicion] == "o"){
+                    texto = texto + "ober"
+                    }else if(lista[posicion] == "u"){
+                    texto = texto + "ufat"
+                    }else{texto = texto + lista[posicion]}
+                    contador++;
+                }
+                return texto;
+            }
+
+            function desencriptar() {
+                let str = document.getElementById("texto-ingresado").value;
+                let lista = str.split('');
+                
+                var texto = "" ;
+                var cantidad = lista.length;
+                var contador = 1;
+                
+                for(var posicion = 0; posicion < lista.length; posicion++){
+                    if(lista[posicion] == "a"){
+                    texto = texto + "a"
+                    posicion = posicion + 1
+                    }else if(lista[posicion] == "e"){
+                    texto = texto + "e"
+                    posicion = posicion + 4
+                    }else if(lista[posicion] == "i"){
+                    texto = texto + "i"
+                    posicion = posicion + 3
+                    }else if(lista[posicion] == "o"){
+                    texto = texto + "o"
+                    posicion = posicion + 3
+                    }else if(lista[posicion] == "u"){
+                    texto = texto + "u"
+                    posicion = posicion + 3
+                    }else{texto = texto + lista[posicion]}
+                    contador++;
+                }return texto;
+            }
+                
+            function onClickEncriptar() { 
+                texto = encriptar();
+                trasladarTexto(texto);
+                ocultar();
+                mostrar();
+            }
+
+            function onClickDesencriptar() {  
+                texto = desencriptar();
+                trasladarTexto(texto);
+                ocultar();
+                mostrar();
+            }
+
+            function ocultar() {
+                document.getElementById('munieco').style.display = 'none';
+                document.getElementById('ningun-mensaje').style.display = 'none';
+                document.getElementById('texto-deseado').style.display = 'none';
+            }
+
+            function mostrar() {
+                document.getElementById('copiar').style.display = 'block';
+            }
+        </script>
+    </body>
+</html>
